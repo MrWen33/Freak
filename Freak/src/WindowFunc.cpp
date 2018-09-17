@@ -35,8 +35,11 @@ GLFWwindow* openglInit(string name, int wid, int height, GLFWframebuffersizefun 
 
 	glfwSetFramebufferSizeCallback(window, kbd_callback);
 	glfwSetCursorPosCallback(window, mouse_callback);
-
+	//启用点精灵
 	glEnable(GL_PROGRAM_POINT_SIZE);
+	//启用alpha混合
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	// tell GLFW to capture our mouse
 	//glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
