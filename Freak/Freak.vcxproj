@@ -19,31 +19,32 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="headers\GameObject.h" />
-    <ClInclude Include="headers\ImgLoader.h" />
-    <ClInclude Include="headers\Mesh.h" />
-    <ClInclude Include="headers\Model.h" />
-    <ClInclude Include="headers\Shader.h" />
-    <ClInclude Include="headers\stb_image.h" />
-    <ClInclude Include="headers\utils.h" />
-    <ClInclude Include="headers\WindowFunc.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="src\GameObject.cpp" />
-    <ClCompile Include="src\glad.c" />
-    <ClCompile Include="src\ImgLoader.cpp" />
-    <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\Mesh.cpp" />
-    <ClCompile Include="src\Model.cpp" />
-    <ClCompile Include="src\Shader.cpp" />
-    <ClCompile Include="src\stb_image.cpp" />
-    <ClCompile Include="src\utils.cpp" />
-    <ClCompile Include="src\WindowFunc.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="headers\Player.h" />
     <None Include="shaders\pointShader.fs" />
     <None Include="shaders\pointShader.vs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="graphics\Graphics.h" />
+    <ClInclude Include="ImgLoader.h" />
+    <ClInclude Include="Mesh.h" />
+    <ClInclude Include="Model.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="Shader.h" />
+    <ClInclude Include="stb_image.h" />
+    <ClInclude Include="utils.h" />
+    <ClInclude Include="WindowFunc.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="glad.c" />
+    <ClCompile Include="graphics\Graphics.cpp" />
+    <ClCompile Include="ImgLoader.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="Model.cpp" />
+    <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="stb_image.cpp" />
+    <ClCompile Include="utils.cpp" />
+    <ClCompile Include="WindowFunc.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
