@@ -20,14 +20,14 @@ int main() {
 		process_input(win);
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
-		player.Draw();
-		/*for (auto& object : GameObject::objects) {
-			object.Update(deltaTime);
-			object.Draw(shader);
-		}*/
+		for (auto& object : GameObject::objects) {
+			object->Update(deltaTime);
+			object->Draw();
+		}
 
 		glfwPollEvents();
 		glfwSwapBuffers(win);
+		GameObject::fresh_obj_sheet();
 	}
 	return 0;
 }
