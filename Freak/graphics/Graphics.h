@@ -4,15 +4,14 @@
 #include<string>
 #include<unordered_map>
 #include"../Shader.h"
+#include"../GameObject.h"
 
 class Sprite {
 public:
 	Sprite(std::string path);
-	void SetPos(float x, float y);
-	void Draw();
+	void Draw(const GameObject& obj);
 private:
 	unsigned int TexID;
-	float xpos, ypos;
 	static std::unordered_map<std::string, unsigned int> Path2TexID;
 	static unsigned int get_id_or_load(std::string path);
 	static Shader& get_shader();

@@ -8,24 +8,16 @@ unordered_map<string, unsigned int> Sprite::Path2TexID = unordered_map<string, u
 Sprite::Sprite(std::string path)
 {
 	TexID = get_id_or_load(path);
-	xpos = 0;
-	ypos = 0;
 }
 
-void Sprite::SetPos(float x, float y)
-{
-	xpos = x;
-	ypos = y;
-}
-
-void Sprite::Draw()
+void Sprite::Draw(const GameObject& obj)
 {
 	unsigned int VAO;
 	glGenVertexArrays(1, &VAO);
 	Shader& shader = get_shader();
 	shader.use();
 	shader.setFloat("sprite_tex", 0);
-	shader.setVec3("aPos", glm::vec3(xpos, ypos, 0));
+	shader.setVec3("aPos", glm::vec3(obj.xpos, obj.ypos, 0));
 	glBindVertexArray(VAO);
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, TexID);

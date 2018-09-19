@@ -23,6 +23,7 @@
     <None Include="shaders\pointShader.vs" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GameObject.h" />
     <ClInclude Include="graphics\Graphics.h" />
     <ClInclude Include="ImgLoader.h" />
     <ClInclude Include="Mesh.h" />

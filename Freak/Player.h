@@ -18,7 +18,7 @@ public:
 	void Update(float deltaTime) override {
 		
 	}
-	void Draw(Shader& shader) override {
-		sprite.Draw();
+	void Draw() override {
+		sprite.Draw(*this);
 	}
 };
