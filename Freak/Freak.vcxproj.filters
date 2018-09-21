@@ -53,6 +53,12 @@
     <ClInclude Include="GameObject.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="MoveHandle.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameObject.cpp">
@@ -86,6 +92,12 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="graphics\Graphics.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MoveHandle.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

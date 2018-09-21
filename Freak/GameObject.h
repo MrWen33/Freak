@@ -3,34 +3,33 @@
 #include<vector>
 #include<string>
 #include"Shader.h"
+#include"MoveHandle.h"
+#include"Physics.h"
+#include"graphics\Graphics.h"
+class Sprite;
+class MoveHandle;
+class VelocitySetter;
+
+enum MoveState {
+	NONE, UP, DOWN, LEFT, RIGHT, UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT
+};
+
 class GameObject {
 public:
 	static std::vector<GameObject*> objects;
-	static void fresh_obj_sheet() {
-		if (!should_fresh) return;
-		for (int i = objects.size()-1; i >= 0; --i) {
-			if (objects[i] == NULL) {
-				objects.erase(objects.begin() + i);
-			}
-		}
-		should_fresh = false;
-	}
+	static void fresh_obj_sheet();
 	std::string name;
 	float xpos, ypos;
+	MoveState dir;
 
-	GameObject(std::string name) {
-		this->name = name;
-		objects.push_back(this);
-		xpos = 0;
-		ypos = 0;
-	}
-	virtual void Draw() = 0;
-	virtual void Update(float deltaTime) = 0;
-	virtual ~GameObject() {
-		auto this_iter = std::find(objects.begin(), objects.end(), this);
-		*this_iter = NULL;
-		should_fresh = true;
-	};
+	MoveHandle* moveHandle;
+	VelocitySetter* velocitySetter;
+	Sprite* sprite;
+
+	GameObject(std::string name, MoveHandle* moveHandle=NULL, VelocitySetter* velocitySetter=NULL, Sprite* sprite=NULL);
+	virtual void Draw();;
+	virtual void Update(float deltaTime);;
+	virtual ~GameObject();;
 private:
 	static bool should_fresh;
 };

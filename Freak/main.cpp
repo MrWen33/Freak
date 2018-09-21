@@ -13,7 +13,7 @@ using std::string;
 int main() {
 	GLFWwindow* win= openglInit("test", 800, 600, framebuffer_size_callback);
 	float time = glfwGetTime();
-	Player player("player", "imgs/player.png");
+	GameObject player("player", new InputMovement(), new ConstVelocitySetter(0.01), new Sprite("imgs/player.png"));
 	while (!glfwWindowShouldClose(win)) {
 		float deltaTime = glfwGetTime() - time;
 		time = glfwGetTime();
