@@ -7,13 +7,20 @@
 #include"WindowFunc.h"
 #include"GameObject.h"
 #include"Player.h"
+#include"RAII.h"
 
 using std::string;
 
 int main() {
 	GLFWwindow* win= openglInit("test", 800, 600, framebuffer_size_callback);
 	float time = glfwGetTime();
-	GameObject player("player", new InputMovement(), new ConstVelocitySetter(0.01), new Sprite("imgs/player.png"));
+	RAII<InputMovement> input(new InputMovement());
+	RAII<VelocitySetter> velocity(new ConstVelocitySetter(0.01));
+	RAII<Sprite> sprite(new Sprite("imgs/player.png"));
+	GameObject player("player", 
+		input.get(), 
+		velocity.get(), 
+		sprite.get());
 	while (!glfwWindowShouldClose(win)) {
 		float deltaTime = glfwGetTime() - time;
 		time = glfwGetTime();
