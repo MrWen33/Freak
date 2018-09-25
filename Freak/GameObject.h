@@ -15,21 +15,43 @@ enum MoveState {
 };
 
 class GameObject {
+	friend class GameObjectPool;
 public:
-	static std::vector<GameObject*> objects;
-	static void fresh_obj_sheet();
-	std::string name;
-	float xpos, ypos;
-	MoveState dir;
+	void Draw();
+	bool Update(float deltaTime);//在释放瞬间帧返回true
+	void Init(std::string name, MoveHandle* moveHandle = NULL, VelocitySetter* velocitySetter = NULL, Sprite* sprite = NULL);
+	virtual ~GameObject() {};
+	bool IsInUse();
+	GameObject* GetNext() { return next; };
+	void SetNext(GameObject* _next) {
+		next = _next;
+	};
+	union
+	{
+		struct
+		{
+			std::string name;
+			float xpos, ypos;
+			MoveState dir;
+			MoveHandle* moveHandle;
+			VelocitySetter* velocitySetter;
+			Sprite* sprite;
+		} live;
+		GameObject* next;
+	};
 
-	MoveHandle* moveHandle;
-	VelocitySetter* velocitySetter;
-	Sprite* sprite;
-
-	GameObject(std::string name, MoveHandle* moveHandle=NULL, VelocitySetter* velocitySetter=NULL, Sprite* sprite=NULL);
-	virtual void Draw();;
-	virtual void Update(float deltaTime);;
-	virtual ~GameObject();;
 private:
-	static bool should_fresh;
+	bool in_use;
+	GameObject();
+};
+
+class GameObjectPool {
+public:
+	GameObjectPool();
+	void create(std::string name, MoveHandle* moveHandle = NULL, VelocitySetter* velocitySetter = NULL, Sprite* sprite = NULL);
+	void update(float deltaTime);
+private:
+	static const int POOL_SIZE = 10000;
+	GameObject * first_avaliable;
+	GameObject objs[POOL_SIZE];
 };

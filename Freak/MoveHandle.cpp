@@ -17,31 +17,31 @@ void InputMovement::update(GameObject * obj) {
 	switch (key)
 	{
 	case(1):
-		obj->dir = UP;
+		obj->live.dir = UP;
 		break;
 	case(1<<1):
-		obj->dir = DOWN;
+		obj->live.dir = DOWN;
 		break;
 	case(1 << 2):
-		obj->dir = LEFT;
+		obj->live.dir = LEFT;
 		break;
 	case(1 << 3):
-		obj->dir = RIGHT;
+		obj->live.dir = RIGHT;
 		break;
 	case(1 + (1<<3)):
-		obj->dir = UP_RIGHT;
+		obj->live.dir = UP_RIGHT;
 		break;
 	case(1 + (1<<2)):
-		obj->dir = UP_LEFT;
+		obj->live.dir = UP_LEFT;
 		break;
 	case((1<<1) + (1<<3)):
-		obj->dir = DOWN_RIGHT;
+		obj->live.dir = DOWN_RIGHT;
 		break;
 	case((1<<1) + (1<<2)):
-		obj->dir = DOWN_LEFT;
+		obj->live.dir = DOWN_LEFT;
 		break;
 	default:
-		obj->dir = NONE;
+		obj->live.dir = NONE;
 		break;
 	}
 }

@@ -1,41 +1,63 @@
 #include"GameObject.h"
 
-std::vector<GameObject *> GameObject::objects = std::vector<GameObject *>();
-bool GameObject::should_fresh = false;
-
-void GameObject::fresh_obj_sheet() {
-	if (!should_fresh) return;
-	for (int i = objects.size() - 1; i >= 0; --i) {
-		if (objects[i] == NULL) {
-			objects.erase(objects.begin() + i);
-		}
-	}
-	should_fresh = false;
-}
-
-GameObject::GameObject(std::string name, MoveHandle * moveHandle, VelocitySetter * velocitySetter, Sprite * sprite)
-{
-	this->name = name;
-	this->moveHandle = moveHandle;
-	this->velocitySetter = velocitySetter;
-	this->sprite = sprite;
-	objects.push_back(this);
-	xpos = 0;
-	ypos = 0;
-}
-
 inline void GameObject::Draw() {
 
-	if (sprite != NULL) sprite->Draw(*this);
+	if (live.sprite != NULL) live.sprite->Draw(*this);
 }
 
-inline void GameObject::Update(float deltaTime) {
-	if (moveHandle != NULL) moveHandle->update(this);
-	if (velocitySetter != NULL) velocitySetter->update(this);
+bool GameObject::Update(float deltaTime) {
+	if (!IsInUse()) return false;
+	if (live.moveHandle != NULL) live.moveHandle->update(this);
+	if (live.velocitySetter != NULL) live.velocitySetter->update(this);
+	if (abs(live.xpos) > 1.3 || abs(live.ypos) > 1.3) {
+		in_use = false;
+		return true;
+	};
+	Draw();
+	return false;
 }
 
-inline GameObject::~GameObject() {
-	auto this_iter = std::find(objects.begin(), objects.end(), this);
-	*this_iter = NULL;
-	should_fresh = true;
+void GameObject::Init(std::string name, MoveHandle * moveHandle, VelocitySetter * velocitySetter, Sprite * sprite)
+{
+	live.name = name;
+	live.moveHandle = moveHandle;
+	live.velocitySetter = velocitySetter;
+	live.sprite = sprite;
+	live.xpos = 0;
+	live.ypos = 0;
+	in_use = true;
+}
+
+bool GameObject::IsInUse()
+{
+	return in_use;
+}
+
+GameObject::GameObject() {
+	in_use = false;
+}
+
+GameObjectPool::GameObjectPool()
+{
+	first_avaliable = &objs[0];
+	for (int i = 0; i < POOL_SIZE-1; ++i) {
+		objs[i].next = &objs[i + 1];
+	}
+}
+
+void GameObjectPool::create(std::string name, MoveHandle * moveHandle, VelocitySetter * velocitySetter, Sprite * sprite)
+{
+	GameObject* next_first_avaliable = first_avaliable->GetNext();
+	first_avaliable->Init(name, moveHandle, velocitySetter, sprite);
+	first_avaliable = next_first_avaliable;
+}
+
+void GameObjectPool::update(float deltaTime)
+{
+	for (auto& obj : objs) {
+		if (obj.Update(deltaTime)) {
+			obj.SetNext(first_avaliable);
+			first_avaliable = &obj;
+		}
+	}
 }

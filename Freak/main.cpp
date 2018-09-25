@@ -17,9 +17,10 @@ int main() {
 	RAII<InputMovement> input(new InputMovement());
 	RAII<VelocitySetter> velocity(new ConstVelocitySetter(0.01));
 	RAII<Sprite> sprite(new Sprite("imgs/player.png"));
-	GameObject player("player", 
-		input.get(), 
-		velocity.get(), 
+	GameObjectPool pool;
+	pool.create("player",
+		input.get(),
+		velocity.get(),
 		sprite.get());
 	while (!glfwWindowShouldClose(win)) {
 		float deltaTime = glfwGetTime() - time;
@@ -27,14 +28,9 @@ int main() {
 		process_input(win);
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
-		for (auto& object : GameObject::objects) {
-			object->Update(deltaTime);
-			object->Draw();
-		}
-
+		pool.update(deltaTime);
 		glfwPollEvents();
 		glfwSwapBuffers(win);
-		GameObject::fresh_obj_sheet();
 	}
 	return 0;
 }

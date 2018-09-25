@@ -17,7 +17,7 @@ void Sprite::Draw(const GameObject& obj)
 	Shader& shader = get_shader();
 	shader.use();
 	shader.setFloat("sprite_tex", 0);
-	shader.setVec3("aPos", glm::vec3(obj.xpos, obj.ypos, 0));
+	shader.setVec3("aPos", glm::vec3(obj.live.xpos, obj.live.ypos, 0));
 	glBindVertexArray(VAO);
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, TexID);
