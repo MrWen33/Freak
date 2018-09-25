@@ -1,5 +1,9 @@
 #include "Physics.h"
 
+ConstVelocitySetter::ConstVelocitySetter(float Speed) :
+	horizontal_speed(Speed),
+	vertical_speed(Speed*WindowInfo::width / WindowInfo::height) {}
+
 void ConstVelocitySetter::update(GameObject * obj) {
 	static float sqrt2 = sqrt(2);
 	switch (obj->dir)
@@ -7,32 +11,32 @@ void ConstVelocitySetter::update(GameObject * obj) {
 	case(NONE):
 		break;
 	case(UP):
-		obj->ypos += speed;
+		obj->ypos += vertical_speed;
 		break;
 	case(DOWN):
-		obj->ypos -= speed;
+		obj->ypos -= vertical_speed;
 		break;
 	case(LEFT):
-		obj->xpos -= speed;
+		obj->xpos -= horizontal_speed;
 		break;
 	case(RIGHT):
-		obj->xpos += speed;
+		obj->xpos += horizontal_speed;
 		break;
 	case(UP_LEFT):
-		obj->xpos -= speed * sqrt2;
-		obj->ypos += speed * sqrt2;
+		obj->xpos -= horizontal_speed/sqrt2;
+		obj->ypos += vertical_speed/ sqrt2;
 		break;
 	case(UP_RIGHT):
-		obj->xpos += speed * sqrt2;
-		obj->ypos += speed * sqrt2;
+		obj->xpos += horizontal_speed / sqrt2;
+		obj->ypos += vertical_speed / sqrt2;
 		break;
 	case(DOWN_LEFT):
-		obj->xpos -= speed * sqrt2;
-		obj->ypos -= speed * sqrt2;
+		obj->xpos -= horizontal_speed / sqrt2;
+		obj->ypos -= vertical_speed / sqrt2;
 		break;
 	case(DOWN_RIGHT):
-		obj->xpos += speed * sqrt2;
-		obj->ypos -= speed * sqrt2;
+		obj->xpos += horizontal_speed / sqrt2;
+		obj->ypos -= vertical_speed / sqrt2;
 		break;
 	default:
 		break;

@@ -11,8 +11,9 @@ public:
 
 class ConstVelocitySetter: public VelocitySetter {
 private:
-	const float speed;
+	const float horizontal_speed;
+	const float vertical_speed;
 public:
-	ConstVelocitySetter(float Speed) : speed(Speed) {}
+	ConstVelocitySetter(float Speed);
 	void update(GameObject* obj) override;
 };
