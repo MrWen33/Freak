@@ -1,8 +1,10 @@
 #include "Physics.h"
+#include "utils.h"
 
 ConstVelocitySetter::ConstVelocitySetter(float Speed) :
 	horizontal_speed(Speed),
-	vertical_speed(Speed*WindowInfo::width / WindowInfo::height) {}
+	vertical_speed(Speed*WindowInfo::width / WindowInfo::height),
+	bound_isset(false){}
 
 void ConstVelocitySetter::update(GameObject * obj) {
 	static float sqrt2 = sqrt(2);
@@ -40,6 +42,9 @@ void ConstVelocitySetter::update(GameObject * obj) {
 		break;
 	default:
 		break;
+	}
+	if (bound_isset) {
+		bound.clamp(obj->live.xpos, obj->live.ypos);
 	}
 	return;
 }

@@ -15,13 +15,14 @@ int main() {
 	GLFWwindow* win= openglInit("test", 800, 600, framebuffer_size_callback);
 	float time = glfwGetTime();
 	RAII<InputMovement> input(new InputMovement());
-	RAII<VelocitySetter> velocity(new ConstVelocitySetter(0.01));
+	RAII<ConstVelocitySetter> velocity(new ConstVelocitySetter(0.01));
 	RAII<Sprite> sprite(new Sprite("imgs/player.png"));
 	GameObjectPool pool;
 	pool.create("player",
 		input.get(),
 		velocity.get(),
 		sprite.get());
+	velocity.get()->setBound(Bound2f(-1, 1, -1, 1));
 	while (!glfwWindowShouldClose(win)) {
 		float deltaTime = glfwGetTime() - time;
 		time = glfwGetTime();
