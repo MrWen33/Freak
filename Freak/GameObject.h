@@ -9,6 +9,7 @@
 class Sprite;
 class MoveHandle;
 class VelocitySetter;
+class BoxCollider;
 
 enum MoveState {
 	NONE, UP, DOWN, LEFT, RIGHT, UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT
@@ -19,7 +20,9 @@ class GameObject {
 public:
 	void Draw();
 	bool Update(float deltaTime);//在释放瞬间帧返回true
-	void Init(std::string name, MoveHandle* moveHandle = NULL, VelocitySetter* velocitySetter = NULL, Sprite* sprite = NULL);
+	void Init(std::string name, float xpos = 0, float ypos = 0, MoveHandle* moveHandle = NULL, VelocitySetter* velocitySetter = NULL, Sprite* sprite = NULL);
+	virtual void OnCollisionWith(GameObject& other);
+	virtual bool IsCollisionWith(GameObject& other);
 	virtual ~GameObject() {};
 	bool IsInUse();
 	GameObject* GetNext() { return next; };
@@ -33,6 +36,7 @@ public:
 			std::string name;
 			float xpos, ypos;
 			MoveState dir;
+			BoxCollider* collider;
 			MoveHandle* moveHandle;
 			VelocitySetter* velocitySetter;
 			Sprite* sprite;
@@ -50,7 +54,13 @@ public:
 	GameObjectPool();
 	void create(std::string name, MoveHandle* moveHandle = NULL, VelocitySetter* velocitySetter = NULL, Sprite* sprite = NULL);
 	void update(float deltaTime);
+	void Draw();
+	void DoCollisionTest();
+	void FreshObjMesh();
 private:
+	static const int MESH_HEIGHT = 10;
+	static const int MESH_WIDTH = 10;
+	std::vector<GameObject*> obj_mesh[MESH_HEIGHT][MESH_WIDTH];
 	static const int POOL_SIZE = 10000;
 	GameObject * first_avaliable;
 	GameObject objs[POOL_SIZE];

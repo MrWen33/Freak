@@ -103,5 +103,8 @@
     <ClCompile Include="Physics.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Game.h">
+      <Filter>头文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

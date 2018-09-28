@@ -39,4 +39,3 @@ Shader & Sprite::get_shader()
 	static Shader pointShader("shaders/pointShader.vs", "shaders/pointShader.fs");
 	return pointShader;
 }
-

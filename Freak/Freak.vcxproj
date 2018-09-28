@@ -38,6 +38,7 @@
     <ClInclude Include="WindowFunc.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Game.h" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="graphics\Graphics.cpp" />

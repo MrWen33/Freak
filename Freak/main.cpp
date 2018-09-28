@@ -22,7 +22,7 @@ int main() {
 		input.get(),
 		velocity.get(),
 		sprite.get());
-	velocity.get()->setBound(Bound2f(-1, 1, -1, 1));
+	velocity.get()->setBound(Bound2f(0, 0, 2, 2));
 	while (!glfwWindowShouldClose(win)) {
 		float deltaTime = glfwGetTime() - time;
 		time = glfwGetTime();
@@ -30,6 +30,8 @@ int main() {
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 		pool.update(deltaTime);
+		pool.DoCollisionTest();
+		pool.Draw();
 		glfwPollEvents();
 		glfwSwapBuffers(win);
 	}
