@@ -20,12 +20,13 @@ class GameObject {
 public:
 	void Draw();
 	bool Update(float deltaTime);//在释放瞬间帧返回true
-	void Init(std::string name, float xpos = 0, float ypos = 0, MoveHandle* moveHandle = NULL, VelocitySetter* velocitySetter = NULL, Sprite* sprite = NULL);
+	void Init(std::string name, float xpos = 0, float ypos = 0, MoveHandle* moveHandle = NULL, VelocitySetter* velocitySetter = NULL, Sprite* sprite = NULL, BoxCollider* collider=NULL);
 	virtual void OnCollisionWith(GameObject& other);
 	virtual bool IsCollisionWith(GameObject& other);
 	virtual ~GameObject() {};
 	bool IsInUse();
 	GameObject* GetNext() { return next; };
+	BoxCollider* GetWorldCollider();
 	void SetNext(GameObject* _next) {
 		next = _next;
 	};
@@ -52,7 +53,7 @@ private:
 class GameObjectPool {
 public:
 	GameObjectPool();
-	void create(std::string name, MoveHandle* moveHandle = NULL, VelocitySetter* velocitySetter = NULL, Sprite* sprite = NULL);
+	void create(std::string name, MoveHandle* moveHandle = NULL, VelocitySetter* velocitySetter = NULL, Sprite* sprite = NULL, BoxCollider* collider = NULL);
 	void update(float deltaTime);
 	void Draw();
 	void DoCollisionTest();

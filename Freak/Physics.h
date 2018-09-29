@@ -80,7 +80,7 @@ class BoxCollider{
 public:
 	BoxCollider(Bound2f bound) :bound(bound) {};
 	bool isCollisionWith(BoxCollider* other);
-
+	void update(GameObject* father);
 private:
 	Bound2f bound;
 };

@@ -17,11 +17,19 @@ int main() {
 	RAII<InputMovement> input(new InputMovement());
 	RAII<ConstVelocitySetter> velocity(new ConstVelocitySetter(0.01));
 	RAII<Sprite> sprite(new Sprite("imgs/player.png"));
+	RAII<BoxCollider> collider1(new BoxCollider(Bound2f(0, 0, 0.05, 0.05)));
+	RAII<BoxCollider> collider2(new BoxCollider(Bound2f(0, 0, 0.05, 0.05)));
 	GameObjectPool pool;
 	pool.create("player",
 		input.get(),
 		velocity.get(),
-		sprite.get());
+		sprite.get(), 
+		collider1.get());
+	pool.create("ball",
+		NULL,
+		NULL,
+		sprite.get(),
+		collider2.get());
 	velocity.get()->setBound(Bound2f(0, 0, 2, 2));
 	while (!glfwWindowShouldClose(win)) {
 		float deltaTime = glfwGetTime() - time;

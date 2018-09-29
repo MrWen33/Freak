@@ -59,3 +59,8 @@ bool BoxCollider::isCollisionWith(BoxCollider * other)
 	float height_sum = std::get<1>(this_rect) + std::get<1>(other_rect);
 	return (wid_sum > std::get<0>(new_rect) && height_sum > std::get<1>(new_rect));
 }
+
+void BoxCollider::update(GameObject * father)
+{
+	bound.setCenter(father->live.xpos, father->live.ypos);
+}

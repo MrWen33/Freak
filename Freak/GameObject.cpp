@@ -16,9 +16,11 @@ bool GameObject::Update(float deltaTime) {
 	return false;
 }
 
-void GameObject::Init(std::string name, float xpos, float ypos, MoveHandle * moveHandle, VelocitySetter * velocitySetter, Sprite * sprite)
+void GameObject::Init(std::string name, float xpos, float ypos, MoveHandle * moveHandle, VelocitySetter * velocitySetter, Sprite * sprite, BoxCollider* collider)
 {
+	next = NULL;
 	live.name = name;
+	live.collider = collider;
 	live.moveHandle = moveHandle;
 	live.velocitySetter = velocitySetter;
 	live.sprite = sprite;
@@ -34,8 +36,11 @@ void GameObject::OnCollisionWith(GameObject & other)
 
 bool GameObject::IsCollisionWith(GameObject & other)
 {
-	if (live.collider&&other.live.collider) {
-		return live.collider->isCollisionWith(other.live.collider);
+	BoxCollider* this_collider = GetWorldCollider();
+	BoxCollider* other_collider = other.GetWorldCollider();
+	if (this_collider&&other_collider) {
+		
+		return this_collider->isCollisionWith(other_collider);
 	}
 	return false;
 }
@@ -43,6 +48,15 @@ bool GameObject::IsCollisionWith(GameObject & other)
 bool GameObject::IsInUse()
 {
 	return in_use;
+}
+
+BoxCollider* GameObject::GetWorldCollider()
+{
+	if (live.collider) {
+		live.collider->update(this);
+		return live.collider;
+	}
+	return NULL;
 }
 
 GameObject::GameObject() {
@@ -53,14 +67,14 @@ GameObjectPool::GameObjectPool()
 {
 	first_avaliable = &objs[0];
 	for (int i = 0; i < POOL_SIZE-1; ++i) {
-		objs[i].next = &objs[i + 1];
+		objs[i].SetNext(&objs[i + 1]);
 	}
 }
 
-void GameObjectPool::create(std::string name, MoveHandle * moveHandle, VelocitySetter * velocitySetter, Sprite * sprite)
+void GameObjectPool::create(std::string name, MoveHandle * moveHandle, VelocitySetter * velocitySetter, Sprite * sprite, BoxCollider* collider)
 {
 	GameObject* next_first_avaliable = first_avaliable->GetNext();
-	first_avaliable->Init(name, 0, 0, moveHandle, velocitySetter, sprite);
+	first_avaliable->Init(name, 0, 0, moveHandle, velocitySetter, sprite, collider);
 	first_avaliable = next_first_avaliable;
 }
 
