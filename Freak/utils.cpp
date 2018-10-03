@@ -28,3 +28,7 @@ unsigned int loadMaterial(std::string path)
 	img.free();
 	return ID;
 }
+
+void display_FPS(float deltaTime) {
+	std::cout << 1.f / deltaTime << std::endl;
+}

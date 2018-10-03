@@ -1,6 +1,6 @@
 #pragma once
-
 #include<vector>
+#include<memory>
 #include<string>
 #include"Shader.h"
 #include"MoveHandle.h"
@@ -20,7 +20,10 @@ class GameObject {
 public:
 	void Draw();
 	bool Update(float deltaTime);//在释放瞬间帧返回true
-	void Init(std::string name, float xpos = 0, float ypos = 0, MoveHandle* moveHandle = NULL, VelocitySetter* velocitySetter = NULL, Sprite* sprite = NULL, BoxCollider* collider=NULL);
+	void Init(std::string name, float xpos = 0, float ypos = 0, 
+		std::shared_ptr<MoveHandle> moveHandle = NULL, 
+		std::shared_ptr<VelocitySetter> velocitySetter = NULL, 
+		std::shared_ptr<Sprite> sprite = NULL, BoxCollider* collider=NULL);
 	virtual void OnCollisionWith(GameObject& other);
 	virtual bool IsCollisionWith(GameObject& other);
 	virtual ~GameObject() {};
@@ -37,10 +40,10 @@ public:
 			std::string name;
 			float xpos, ypos;
 			MoveState dir;
-			BoxCollider* collider;
-			MoveHandle* moveHandle;
-			VelocitySetter* velocitySetter;
-			Sprite* sprite;
+			std::unique_ptr<BoxCollider> collider;
+			std::shared_ptr<MoveHandle> moveHandle;
+			std::shared_ptr<VelocitySetter> velocitySetter;
+			std::shared_ptr<Sprite> sprite;
 		} live;
 		GameObject* next;
 	};
@@ -53,7 +56,12 @@ private:
 class GameObjectPool {
 public:
 	GameObjectPool();
-	void create(std::string name, MoveHandle* moveHandle = NULL, VelocitySetter* velocitySetter = NULL, Sprite* sprite = NULL, BoxCollider* collider = NULL);
+	void create(std::string name, float xpos, float ypos, std::shared_ptr<MoveHandle> moveHandle = NULL,
+		std::shared_ptr<VelocitySetter> velocitySetter = NULL,
+		std::shared_ptr<Sprite> sprite = NULL, BoxCollider* collider = NULL);
+	void create(std::string name, std::shared_ptr<MoveHandle> moveHandle = NULL,
+		std::shared_ptr<VelocitySetter> velocitySetter = NULL,
+		std::shared_ptr<Sprite> sprite = NULL, BoxCollider* collider = NULL);
 	void update(float deltaTime);
 	void Draw();
 	void DoCollisionTest();

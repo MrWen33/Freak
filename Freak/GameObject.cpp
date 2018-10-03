@@ -16,11 +16,15 @@ bool GameObject::Update(float deltaTime) {
 	return false;
 }
 
-void GameObject::Init(std::string name, float xpos, float ypos, MoveHandle * moveHandle, VelocitySetter * velocitySetter, Sprite * sprite, BoxCollider* collider)
+void GameObject::Init(std::string name, float xpos, float ypos, 
+	std::shared_ptr<MoveHandle> moveHandle,
+	std::shared_ptr<VelocitySetter> velocitySetter,
+	std::shared_ptr<Sprite> sprite, 
+	BoxCollider* collider)
 {
 	next = NULL;
 	live.name = name;
-	live.collider = collider;
+	live.collider = std::unique_ptr<BoxCollider>(collider);
 	live.moveHandle = moveHandle;
 	live.velocitySetter = velocitySetter;
 	live.sprite = sprite;
@@ -31,7 +35,7 @@ void GameObject::Init(std::string name, float xpos, float ypos, MoveHandle * mov
 
 void GameObject::OnCollisionWith(GameObject & other)
 {
-	std::cout << "BOOM!" << std::endl;
+	//std::cout << "BOOM!" << std::endl;
 }
 
 bool GameObject::IsCollisionWith(GameObject & other)
@@ -54,7 +58,7 @@ BoxCollider* GameObject::GetWorldCollider()
 {
 	if (live.collider) {
 		live.collider->update(this);
-		return live.collider;
+		return live.collider.get();
 	}
 	return NULL;
 }
@@ -71,7 +75,17 @@ GameObjectPool::GameObjectPool()
 	}
 }
 
-void GameObjectPool::create(std::string name, MoveHandle * moveHandle, VelocitySetter * velocitySetter, Sprite * sprite, BoxCollider* collider)
+void GameObjectPool::create(std::string name, float xpos, float ypos, std::shared_ptr<MoveHandle> moveHandle, std::shared_ptr<VelocitySetter> velocitySetter, std::shared_ptr<Sprite> sprite, BoxCollider * collider)
+{
+	GameObject* next_first_avaliable = first_avaliable->GetNext();
+	first_avaliable->Init(name, xpos, ypos, moveHandle, velocitySetter, sprite, collider);
+	first_avaliable = next_first_avaliable;
+}
+
+void GameObjectPool::create(std::string name, std::shared_ptr<MoveHandle> moveHandle,
+	std::shared_ptr<VelocitySetter> velocitySetter,
+	std::shared_ptr<Sprite> sprite, 
+	BoxCollider* collider)
 {
 	GameObject* next_first_avaliable = first_avaliable->GetNext();
 	first_avaliable->Init(name, 0, 0, moveHandle, velocitySetter, sprite, collider);
