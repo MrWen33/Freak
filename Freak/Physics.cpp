@@ -8,43 +8,42 @@ ConstVelocitySetter::ConstVelocitySetter(float Speed) :
 
 void ConstVelocitySetter::update(GameObject * obj) {
 	static float sqrt2 = sqrt(2);
-	switch (obj->live.dir)
+	auto origin_pos = obj->getPos();
+	switch (obj->getDir())
 	{
 	case(NONE):
 		break;
 	case(UP):
-		obj->live.ypos += vertical_speed;
+		obj->setPos(origin_pos.x, origin_pos.y + vertical_speed);
 		break;
 	case(DOWN):
-		obj->live.ypos -= vertical_speed;
+		obj->setPos(origin_pos.x, origin_pos.y - vertical_speed);
 		break;
 	case(LEFT):
-		obj->live.xpos -= horizontal_speed;
+		obj->setPos(origin_pos.x - horizontal_speed, origin_pos.y);
 		break;
 	case(RIGHT):
-		obj->live.xpos += horizontal_speed;
+		obj->setPos(origin_pos.x + horizontal_speed, origin_pos.y); 
 		break;
 	case(UP_LEFT):
-		obj->live.xpos -= horizontal_speed/sqrt2;
-		obj->live.ypos += vertical_speed/ sqrt2;
+		obj->setPos(origin_pos.x - horizontal_speed/sqrt2, origin_pos.y + vertical_speed / sqrt2);
 		break;
 	case(UP_RIGHT):
-		obj->live.xpos += horizontal_speed / sqrt2;
-		obj->live.ypos += vertical_speed / sqrt2;
+		obj->setPos(origin_pos.x + horizontal_speed / sqrt2, origin_pos.y + vertical_speed / sqrt2);
 		break;
 	case(DOWN_LEFT):
-		obj->live.xpos -= horizontal_speed / sqrt2;
-		obj->live.ypos -= vertical_speed / sqrt2;
+		obj->setPos(origin_pos.x - horizontal_speed / sqrt2, origin_pos.y - vertical_speed / sqrt2);
 		break;
 	case(DOWN_RIGHT):
-		obj->live.xpos += horizontal_speed / sqrt2;
-		obj->live.ypos -= vertical_speed / sqrt2;
+		obj->setPos(origin_pos.x + horizontal_speed / sqrt2, origin_pos.y - vertical_speed / sqrt2); 
 		break;
 	default:
 		break;
 	}
 	if (bound_isset) {
-		bound.clamp(obj->live.xpos, obj->live.ypos);
+		auto now_pos = obj->getPos();
+		bound.clamp(now_pos.x, now_pos.y);
+		obj->setPos(now_pos.x, now_pos.y);
 	}
 	return;
 }
@@ -62,5 +61,6 @@ bool BoxCollider::isCollisionWith(BoxCollider * other)
 
 void BoxCollider::update(GameObject * father)
 {
-	bound.setCenter(father->live.xpos, father->live.ypos);
+	auto pos = father->getPos();
+	bound.setCenter(pos.x, pos.y);
 }

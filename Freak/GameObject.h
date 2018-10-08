@@ -15,62 +15,53 @@ enum MoveState {
 	NONE, UP, DOWN, LEFT, RIGHT, UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT
 };
 
+struct Coordinates {
+	float x, y;
+};
+
 class GameObject {
-	friend class GameObjectPool;
+	friend class GameObjectFactory;
 public:
+	virtual void Init(std::string name, float xpos = 0, float ypos = 0,
+		std::shared_ptr<MoveHandle> moveHandle = NULL,
+		std::shared_ptr<VelocitySetter> velocitySetter = NULL,
+		std::shared_ptr<Sprite> sprite = NULL,
+		std::unique_ptr<BoxCollider> collider = NULL);
 	void Draw();
-	bool Update(float deltaTime);//在释放瞬间帧返回true
-	void Init(std::string name, float xpos = 0, float ypos = 0, 
-		std::shared_ptr<MoveHandle> moveHandle = NULL, 
-		std::shared_ptr<VelocitySetter> velocitySetter = NULL, 
-		std::shared_ptr<Sprite> sprite = NULL, BoxCollider* collider=NULL);
+	bool isMove();
+	MoveState getDir() { return dir; };
+	void setDir(MoveState Dir) { dir = Dir; }
+	Coordinates getPos() const { return pos; }
+	void setPos(float x, float y) { pos.x = x, pos.y = y; }
+	bool Update(float deltaTime);
 	virtual void OnCollisionWith(GameObject& other);
 	virtual bool IsCollisionWith(GameObject& other);
 	virtual ~GameObject() {};
-	bool IsInUse();
-	GameObject* GetNext() { return next; };
-	BoxCollider* GetWorldCollider();
-	void SetNext(GameObject* _next) {
-		next = _next;
-	};
-	union
-	{
-		struct
-		{
-			std::string name;
-			float xpos, ypos;
-			MoveState dir;
-			std::unique_ptr<BoxCollider> collider;
-			std::shared_ptr<MoveHandle> moveHandle;
-			std::shared_ptr<VelocitySetter> velocitySetter;
-			std::shared_ptr<Sprite> sprite;
-		} live;
-		GameObject* next;
-	};
 
-private:
-	bool in_use;
+	BoxCollider* GetWorldCollider();
+protected:
 	GameObject();
+private:
+	std::string name;
+	Coordinates pos;
+	MoveState dir;
+	std::unique_ptr<BoxCollider> collider;
+	std::shared_ptr<MoveHandle> moveHandle;
+	std::shared_ptr<VelocitySetter> velocitySetter;
+	std::shared_ptr<Sprite> sprite;
 };
 
-class GameObjectPool {
+class GameObjectFactory {
 public:
-	GameObjectPool();
-	void create(std::string name, float xpos, float ypos, std::shared_ptr<MoveHandle> moveHandle = NULL,
+	std::shared_ptr<GameObject> getGameObject(
+		std::string name, float xpos = 0, float ypos = 0,
+		std::shared_ptr<MoveHandle> moveHandle = NULL,
 		std::shared_ptr<VelocitySetter> velocitySetter = NULL,
-		std::shared_ptr<Sprite> sprite = NULL, BoxCollider* collider = NULL);
-	void create(std::string name, std::shared_ptr<MoveHandle> moveHandle = NULL,
-		std::shared_ptr<VelocitySetter> velocitySetter = NULL,
-		std::shared_ptr<Sprite> sprite = NULL, BoxCollider* collider = NULL);
-	void update(float deltaTime);
-	void Draw();
-	void DoCollisionTest();
-	void FreshObjMesh();
-private:
-	static const int MESH_HEIGHT = 10;
-	static const int MESH_WIDTH = 10;
-	std::vector<GameObject*> obj_mesh[MESH_HEIGHT][MESH_WIDTH];
-	static const int POOL_SIZE = 10000;
-	GameObject * first_avaliable;
-	GameObject objs[POOL_SIZE];
+		std::shared_ptr<Sprite> sprite = NULL,
+		std::unique_ptr<BoxCollider> collider = NULL
+	) {
+		std::shared_ptr<GameObject> obj(new GameObject());
+		obj->Init(name, xpos, ypos, moveHandle, velocitySetter, sprite, std::move(collider));
+		return obj;
+	}
 };

@@ -14,5 +14,11 @@ public:
 
 class InputMovement: public MoveHandle {
 public:
+	static std::shared_ptr<InputMovement> getInstance() {
+		static std::shared_ptr<InputMovement> instance(new InputMovement());
+		return instance;
+	}
 	void update(GameObject* obj) override;
+private:
+	InputMovement() {};
 };

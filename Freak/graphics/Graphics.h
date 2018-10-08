@@ -6,7 +6,7 @@
 #include"../Shader.h"
 #include"../GameObject.h"
 
-class Sprite {
+class Sprite{
 public:
 	Sprite(std::string path);
 	void Draw(const GameObject& obj);

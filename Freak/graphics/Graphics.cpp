@@ -12,12 +12,13 @@ Sprite::Sprite(std::string path)
 
 void Sprite::Draw(const GameObject& obj)
 {
+	auto pos = obj.getPos();
 	unsigned int VAO;
 	glGenVertexArrays(1, &VAO);
 	Shader& shader = get_shader();
 	shader.use();
 	shader.setFloat("sprite_tex", 0);
-	shader.setVec3("aPos", glm::vec3(obj.live.xpos, obj.live.ypos, 0));
+	shader.setVec3("aPos", glm::vec3(pos.x, pos.y, 0));
 	glBindVertexArray(VAO);
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, TexID);
