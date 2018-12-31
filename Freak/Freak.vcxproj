@@ -105,12 +105,20 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>F:\opengllibs\Include;headers;$(IncludePath)</IncludePath>
-    <LibraryPath>F:\opengllibs\Libs;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\dependencies\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\dependencies\Libs;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>F:\opengllibs\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>F:\opengllibs\Libs;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\dependencies\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\dependencies\Libs;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>..\dependencies\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\dependencies\Libs;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>..\dependencies\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\dependencies\Libs;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

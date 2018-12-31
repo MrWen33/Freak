@@ -8,7 +8,7 @@ unsigned int loadMaterial(std::string path);
 template <class T>
 void clamp(T& n, T max, T min) {
 	if (n > max)n = max;
-	else if (n < min)n = main;
+	else if (n < min)n = min;
 }
 
 void display_FPS(float deltaTime);
