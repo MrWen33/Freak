@@ -1,3 +1,6 @@
-[submodule "glfw"]
-	path = glfw
+[submodule "dependencies/sources/glfw"]
+	path = dependencies/sources/glfw
 	url = https://github.com/glfw/glfw.git
+[submodule "dependencies/sources/assimp"]
+	path = dependencies/sources/assimp
+	url = https://github.com/assimp/assimp.git
