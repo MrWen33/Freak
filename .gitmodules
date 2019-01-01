@@ -1,9 +1,3 @@
-[submodule "dependencied/sources/assimp"]
-	path = dependencied/sources/assimp
-	url = https://github.com/assimp/assimp.git
-[submodule "dependencied/sources/glfw"]
-	path = dependencied/sources/glfw
-	url = https://github.com/glfw/glfw.git
 [submodule "dependencies/sources/glfw"]
 	path = dependencies/sources/glfw
 	url = https://github.com/glfw/glfw.git
