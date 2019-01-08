@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="graphics">
+      <UniqueIdentifier>{2fa9d92d-4cbf-4bea-a91a-a5e87f37d5ba}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\pointShader.fs">
@@ -24,12 +27,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ImgLoader.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Mesh.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Model.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
@@ -47,36 +44,18 @@
     <ClInclude Include="WindowFunc.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="graphics\Graphics.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="GameObject.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="MoveHandle.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Physics.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="RAII.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="graphics\Graphics.h">
+      <Filter>graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="GameObject.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="ImgLoader.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Mesh.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Model.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Shader.cpp">
@@ -94,17 +73,17 @@
     <ClCompile Include="glad.c">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\Graphics.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="MoveHandle.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Physics.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="Game.h">
       <Filter>头文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\Graphics.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
